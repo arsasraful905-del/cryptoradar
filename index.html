@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE_HERE" />
+
+    <title>CryptoRadar 24/7 | Expert Insights & Live Market Data</title>
+    <meta name="description" content="Access real-time price action, professional insights, and trend analysis for 50+ crypto assets on CryptoRadar 24/7.">
+    <meta name="keywords" content="cryptoradar, live crypto, bitcoin insights, market trends, crypto analysis">
+    <meta name="robots" content="index, follow">
+
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" href="assets/icon.png">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TRACKING_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-TRACKING_ID');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --p-bg: #0b1120;
+            --s-bg: #1e293b;
+            --accent: #38bdf8;
+            --white: #f8fafc;
+            --up: #22c55e;
+            --down: #ef4444;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--p-bg); color: var(--white); }
+        .navbar { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
+        .main-card { background: var(--s-bg); border-radius: 18px; padding: 25px; margin-bottom: 35px; border: 1px solid rgba(255,255,255,0.06); }
+        .section-tag { color: var(--accent); font-weight: 700; border-left: 5px solid var(--accent); padding-left: 15px; margin-bottom: 25px; }
+        
+        .grid-header { display: grid; grid-template-columns: 2fr 1.5fr 1.5fr 1fr; padding: 12px 18px; font-size: 0.8rem; color: #64748b; font-weight: 700; border-bottom: 1px solid rgba(255,255,255,0.08); }
+        .data-row { display: grid; grid-template-columns: 2fr 1.5fr 1.5fr 1fr; align-items: center; padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,0.04); transition: 0.2s; cursor: pointer; }
+        .data-row:hover { background: rgba(56, 189, 248, 0.05); }
+        
+        .c-icon { width: 26px; height: 26px; margin-right: 12px; border-radius: 50%; }
+        .spark-graph { width: 100px; height: 35px; }
+        .stat-up { color: var(--up); font-weight: 600; }
+        .stat-down { color: var(--down); font-weight: 600; }
+        
+        footer { padding: 80px 0 40px; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; opacity: 0.8; }
+        .social-box a { color: var(--white); margin: 0 15px; text-decoration: none; font-size: 0.85rem; letter-spacing: 1px; }
+
+        @media (max-width: 768px) {
+            .grid-header, .data-row { grid-template-columns: 1.5fr 1.2fr 1fr; }
+            .spark-graph { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <span style="color:var(--accent)">CRYPTORADAR</span> 24/7
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navContent">
+                <ul class="navbar-nav ms-auto small fw-bold">
+                    <li class="nav-item"><a class="nav-link active" href="index.html">MARKET</a></li>
+                    <li class="nav-item"><a class="nav-link" href="insights.html">INSIGHTS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="prediction.html">PREDICTIONS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="signals.html">SIGNALS</a></li>
+                    <li class="nav-item"><a class="nav-link" href="converter.html">CONVERTER</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5">
+        <header class="text-center mb-5 pb-2">
+            <h1 class="display-6 fw-bold">Market Intelligence Engine</h1>
+            <p class="text-secondary">Global crypto asset monitoring with real-time volatility tracking.</p>
+        </header>
+
+        <section id="display-engine">
+            <div class="main-card">
+                <h2 class="section-tag">Market Giants (Safe)</h2>
+                <div class="grid-header"><span>ASSET</span><span class="text-center d-none d-md-block">7D TREND</span><span class="text-end">PRICE</span><span class="text-end">24H %</span></div>
+                <div id="box-1"></div>
+            </div>
+
+            <div class="main-card">
+                <h2 class="section-tag">Infrastructure & DeFi</h2>
+                <div class="grid-header"><span>ASSET</span><span class="text-center d-none d-md-block">7D TREND</span><span class="text-end">PRICE</span><span class="text-end">24H %</span></div>
+                <div id="box-2"></div>
+            </div>
+
+            <div class="main-card">
+                <h2 class="section-tag">Layer-2 Scaling</h2>
+                <div class="grid-header"><span>ASSET</span><span class="text-center d-none d-md-block">7D TREND</span><span class="text-end">PRICE</span><span class="text-end">24H %</span></div>
+                <div id="box-3"></div>
+            </div>
+
+            <div class="main-card">
+                <h2 class="section-tag">Emerging Systems</h2>
+                <div class="grid-header"><span>ASSET</span><span class="text-center d-none d-md-block">7D TREND</span><span class="text-end">PRICE</span><span class="text-end">24H %</span></div>
+                <div id="box-4"></div>
+            </div>
+
+            <div class="main-card">
+                <h2 class="section-tag">Speculative / Memes</h2>
+                <div class="grid-header"><span>ASSET</span><span class="text-center d-none d-md-block">7D TREND</span><span class="text-end">PRICE</span><span class="text-end">24H %</span></div>
+                <div id="box-5"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p class="mb-4 small">&copy; 2026 CryptoRadar 24/7. Data-Driven Market Tracking.</p>
+            <div class="social-box">
+                <a href="#">FACEBOOK</a>
+                <a href="#">TELEGRAM</a>
+                <a href="#">TWITTER</a>
+                <a href="#">YOUTUBE</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Data Protection & Fetching Logic
+        const _kZ = "Q0ctVWRWZEFDd1YzckJiRTExVHZSekJtZEV0";
+        const _uB = "https://api.coingecko.com/api/v3/coins/markets";
+        const _pP = "?vs_currency=usd&sparkline=true&price_change_percentage=24h&ids=";
+
+        const assetList = {
+            box1: ['bitcoin', 'ethereum', 'solana', 'binancecoin', 'ripple', 'cardano', 'avalanche-2', 'polkadot', 'chainlink', 'tron'],
+            box2: ['uniswap', 'cosmos', 'internet-computer', 'near', 'lido-dao', 'the-graph', 'aave', 'maker', 'stacks', 'render-token'],
+            box3: ['matic-network', 'arbitrum', 'optimism', 'immutable-x', 'mantle', 'starknet', 'metis-token', 'manta-network', 'celo', 'skale'],
+            box4: ['injective-protocol', 'kaspa', 'celestia', 'fetch-ai', 'aptos', 'sui', 'sei-network', 'bittensor', 'akash-network', 'beam'],
+            box5: ['dogecoin', 'shiba-inu', 'pepe', 'dogwifhat', 'bonk', 'floki', 'brett', 'popcat', 'book-of-meme', 'mog-coin']
+        };
+
+        async function refreshData() {
+            const queryIds = Object.values(assetList).flat().join(',');
+            const requestUrl = `${_uB}${_pP}${queryIds}&x_cg_demo_api_key=${atob(_kZ)}`;
+
+            try {
+                const response = await fetch(requestUrl);
+                const results = await response.json();
+
+                for (let i = 1; i <= 5; i++) {
+                    const viewBlock = document.getElementById(`box-${i}`);
+                    if (!viewBlock) continue;
+                    viewBlock.innerHTML = '';
+                    const groupIds = assetList[`box${i}`];
+
+                    groupIds.forEach(id => {
+                        const asset = results.find(a => a.id === id);
+                        if (asset) {
+                            const curPrice = asset.current_price.toLocaleString(undefined, {minimumFractionDigits: 2});
+                            const chg24 = asset.price_change_percentage_24h.toFixed(2);
+                            const chgColor = asset.price_change_percentage_24h >= 0 ? 'stat-up' : 'stat-down';
+                            const sparkHue = asset.price_change_percentage_24h >= 0 ? 'hue-rotate(0deg) saturate(1.5)' : 'hue-rotate(145deg) saturate(2)';
+                            
+                            // Extract precise ID for sparkline
+                            const imgParts = asset.image.split('/');
+                            const sparkId = imgParts[imgParts.length - 2];
+
+                            viewBlock.innerHTML += `
+                                <div class="data-row" onclick="window.location.href='insights.html?coin=${asset.id}'">
+                                    <span class="d-flex align-items-center fw-bold">
+                                        <img src="${asset.image}" class="c-icon" onerror="this.style.opacity='0'">
+                                        ${asset.symbol.toUpperCase()}
+                                    </span>
+                                    <div class="text-center d-none d-md-block">
+                                        <img class="spark-graph" src="https://www.coingecko.com/coins/${sparkId}/sparkline.svg" style="filter: ${sparkHue}">
+                                    </div>
+                                    <span class="text-end fw-bold">$${curPrice}</span>
+                                    <span class="text-end ${chgColor}">${chg24}%</span>
+                                </div>`;
+                        }
+                    });
+                }
+            } catch (err) { console.warn("Network bottleneck detected."); }
+        }
+
+        refreshData();
+        setInterval(refreshData, 60000);
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+                      </html>
+                      
