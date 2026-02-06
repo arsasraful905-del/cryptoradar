@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Strategic Insights | CryptoRadar 24/7</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --p-bg: #0b1120;
+            --s-bg: #1e293b;
+            --accent: #38bdf8;
+            --white: #f8fafc;
+            --danger: #ef4444;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--p-bg); color: var(--white); line-height: 1.6; }
+        .navbar { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .detail-card { background: var(--s-bg); border-radius: 24px; padding: 40px; margin-top: 30px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .info-header { border-bottom: 2px solid rgba(56, 189, 248, 0.2); margin-bottom: 30px; padding-bottom: 20px; }
+        .info-box { background: rgba(255,255,255,0.03); padding: 25px; border-radius: 15px; margin-bottom: 25px; border-left: 5px solid var(--accent); transition: 0.3s; }
+        .info-box:hover { background: rgba(255,255,255,0.05); transform: scale(1.01); }
+        .info-box.risk { border-left-color: var(--danger); }
+        .info-title { color: var(--accent); font-weight: 700; margin-bottom: 10px; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1.5px; }
+        .info-box.risk .info-title { color: var(--danger); }
+        .info-content { color: #cbd5e1; font-size: 1.05rem; }
+        .back-btn { color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; margin-bottom: 20px; }
+        footer { padding: 40px 0; text-align: center; opacity: 0.6; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html"><span style="color:var(--accent)">CRYPTORADAR</span> 24/7</a>
+        </div>
+    </nav>
+
+    <div class="container mt-5 mb-5">
+        <a href="index.html" class="back-btn">← Back to Market Explorer</a>
+        
+        <div id="content-area">
+            <div class="detail-card">
+                <div class="info-header">
+                    <h1 id="coin-name" class="display-5 fw-bold text-capitalize">Asset Details</h1>
+                    <p id="coin-symbol" class="text-secondary text-uppercase fw-bold">Deep Strategic Analysis</p>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-title">Identity & Fundamental Background</div>
+                    <div id="id-text" class="info-content">Select an asset to view its background.</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-title">Institutional & Whale Backing</div>
+                    <div id="back-text" class="info-content">Data unavailable.</div>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-title">Growth Logic & Value Drivers</div>
+                    <div id="growth-text" class="info-content">Analysis pending.</div>
+                </div>
+
+                <div class="info-box risk">
+                    <div class="info-title">Primary Risk Factors</div>
+                    <div id="risk-text" class="info-content">Caution: Market risk always applies.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 CryptoRadar 24/7. Trusted Market Insights.</p>
+    </footer>
+
+    <script>
+        // MASTER DATABASE - 50 ASSETS
+        const cdb = {
+            "bitcoin": { n: "Bitcoin", s: "BTC", i: "Digital Gold; first decentralized peer-to-peer electronic cash system.", b: "BlackRock, MicroStrategy, Tesla, Fidelity.", g: "Halving cycles, limited 21M supply, and institutional adoption.", r: "Regulatory shifts and high volatility." },
+            "ethereum": { n: "Ethereum", s: "ETH", i: "Leading smart contract platform powering DeFi and Web3 applications.", b: "J.P. Morgan, Microsoft, and massive developer ecosystem.", g: "Transition to PoS, deflationary burn mechanism, and L2 growth.", r: "Gas fee volatility and network scaling competition." },
+            "solana": { n: "Solana", s: "SOL", i: "High-performance L1 blockchain for scalable decentralized apps.", b: "Jump Crypto, Andreessen Horowitz (a16z).", g: "Extremely fast speed, low costs, and massive NFT/Meme ecosystem.", r: "History of network outages and centralization claims." },
+            "binancecoin": { n: "BNB", s: "BNB", i: "Utility token for the Binance exchange and BNB Smart Chain ecosystem.", b: "Binance Exchange (World's largest).", g: "Frequent token burns and deep integration with Binance services.", r: "Regulatory pressure on Binance exchange." },
+            "ripple": { n: "XRP", s: "XRP", i: "Real-time gross settlement system and currency exchange network.", b: "SBI Holdings, Santander, and 100+ banks.", g: "Global banking adoption for cross-border payments.", r: "Ongoing legal battles (SEC vs Ripple)." },
+            "cardano": { n: "Cardano", s: "ADA", i: "Peer-reviewed L1 blockchain focused on security and academic rigor.", b: "IOHK, Emurgo, and strong community backing.", g: "Phased scientific development and African continent adoption.", r: "Slow speed of new feature implementation." },
+            "avalanche-2": { n: "Avalanche", s: "AVAX", i: "Scalable platform for custom blockchain networks and dApps.", b: "Ava Labs, Deloitte, and Amazon (AWS).", g: "Subnet technology for institutional private chains.", r: "High early-stage token inflation." },
+            "polkadot": { n: "Polkadot", s: "DOT", i: "Interoperability protocol connecting multiple blockchains into one.", b: "Web3 Foundation and Gavin Wood (ETH Co-founder).", g: "Parachain auctions and cross-chain messaging security.", r: "Technical complexity for average developers." },
+            "chainlink": { n: "Chainlink", s: "LINK", i: "The industry-leading decentralized oracle network.", b: "Google Cloud, SWIFT, and most DeFi protocols.", g: "Massive demand for real-world data in smart contracts.", r: "Potential competition from internal L1 oracle tools." },
+            "tron": { n: "TRON", s: "TRX", i: "L1 focused on high-speed entertainment and stablecoin transfers.", b: "Justin Sun and massive usage in the USDT ecosystem.", g: "Highest volume of USDT transactions globally.", r: "Controversial leadership and node centralization." },
+            "uniswap": { n: "Uniswap", s: "UNI", i: "Leading decentralized trading protocol on Ethereum.", b: "Paradigm, a16z, and the DeFi community.", g: "Dominance in DEX trading volume and governance.", r: "Potential regulatory crackdowns on DEX platforms." },
+            "cosmos": { n: "Cosmos", s: "ATOM", i: "The 'Internet of Blockchains' enabling cross-chain communication.", b: "Interchain Foundation and 250+ connected apps.", g: "Growth of IBC protocol usage by major chains.", r: "ATOM token's limited value capture mechanism." },
+            "internet-computer": { n: "Internet Computer", s: "ICP", i: "Blockchain that aims to replace traditional cloud hosting.", b: "Dfinity Foundation and top cryptographers.", g: "On-chain web hosting and high-speed execution.", r: "Centralization concerns and complex tokenomics." },
+            "near": { n: "NEAR Protocol", s: "NEAR", i: "Developer-friendly L1 focusing on usability and sharding.", b: "Tiger Global, Coinbase Ventures.", g: "Focus on AI integration and easy web2-to-web3 migration.", r: "Stiff competition from Solana and Ethereum L2s." },
+            "lido-dao": { n: "Lido", s: "LDO", i: "Largest liquid staking solution for Ethereum.", b: "Dragonfly Capital and institutional stakers.", g: "Dominance in ETH staking and liquid liquidity.", r: "Regulatory risk for staking protocols." },
+            "the-graph": { n: "The Graph", s: "GRT", i: "Indexing protocol for querying data from blockchains.", b: "Used by almost all dApps; Multicoin Capital.", g: "Essential infrastructure; the 'Google' of Web3.", r: "Migration from centralized to decentralized service." },
+            "aave": { n: "Aave", s: "AAVE", i: "Leading decentralized liquidity market for lending.", b: "Widespread institutional usage in DeFi.", g: "Safe lending models and multichain expansion.", r: "Smart contract bugs or liquidation failures." },
+            "maker": { n: "Maker", s: "MKR", i: "Decentralized organization behind the DAI stablecoin.", b: "Pioneer in DeFi; massive asset treasury.", g: "Real-world asset (RWA) backing for stablecoins.", r: "Regulatory pressure on decentralized stablecoins." },
+            "stacks": { n: "Stacks", s: "STX", i: "A Bitcoin Layer for smart contracts and dApps.", b: "First token offering qualified by the SEC.", g: "Bitcoin ecosystem growth and L2 narrative.", r: "Dependency on Bitcoin's network speed." },
+            "render-token": { n: "Render", s: "RNDR", i: "Decentralized GPU rendering for AI and graphics.", b: "Multicoin Capital and Apple ecosystem partners.", g: "Boom in AI demand for GPU computing power.", r: "Competition from centralized GPU farms." },
+            "matic-network": { n: "Polygon", s: "POL", i: "Ethereum scaling framework and ZK-rollup solution.", b: "Disney, Nike, Starbucks, and Reddit.", g: "Vast enterprise partnerships and ZK technology.", r: "Heavy competition from other Ethereum L2s." },
+            "arbitrum": { n: "Arbitrum", s: "ARB", i: "Leading Ethereum L2 rollup with highest TVL.", b: "Offchain Labs and top DeFi projects.", g: "Lowest fees and highest liquidity among rollups.", r: "Large token unlocks for early investors." },
+            "optimism": { n: "Optimism", s: "OP", i: "Ethereum L2 focused on the 'Superchain' network.", b: "Coinbase (via Base) and Paradigm.", g: "Standard for building new L2s (OP Stack).", r: "Intense L2 landscape competition." },
+            "immutable-x": { n: "Immutable", s: "IMX", i: "The premier L2 for Web3 gaming and NFTs.", b: "Ubisoft, GameStop, and Warner Bros.", g: "Explosion of high-quality blockchain games.", r: "Slow mainstream adoption of NFT games." },
+            "mantle": { n: "Mantle", s: "MNT", i: "Modular L2 network with a massive treasury.", b: "BitDAO and the largest DAO treasury.", g: "Yield-bearing assets and ecosystem incentives.", r: "Newer network with evolving security." },
+            "starknet": { n: "Starknet", s: "STRK", i: "ZK-Rollup using STARK proofs for extreme scaling.", b: "StarkWare and world-class ZK researchers.", g: "High-performance apps and native account abstraction.", r: "Complex developer language (Cairo)." },
+            "metis-token": { n: "Metis", s: "METIS", i: "L2 focused on decentralized autonomous organizations.", b: "Strong community and decentralization focus.", g: "Decentralized sequencer technology.", r: "Low liquidity compared to major L2s." },
+            "manta-network": { n: "Manta", s: "MANTA", i: "Modular L2 for ZK-applications.", b: "Binance Labs and Polychain.", g: "Low gas using Celestia data availability.", r: "New project market volatility." },
+            "celo": { n: "Celo", s: "CELO", i: "Mobile-first blockchain for payments.", b: "Jack Dorsey and Andreessen Horowitz.", g: "Transition to Ethereum L2 for better liquidity.", r: "Lagging behind larger L1/L2 ecosystems." },
+            "skale": { n: "SKALE", s: "SKL", i: "Zero-fee blockchain for Ethereum scaling.", b: "Winklevoss Capital.", g: "Gas-less transactions for gaming and apps.", r: "Low token demand due to zero-fee model." },
+            "injective-protocol": { n: "Injective", s: "INJ", i: "The fastest L1 for decentralized finance applications.", b: "Pantera Capital and Mark Cuban.", g: "Institutional focus and burn mechanism.", r: "Market cap outstripping current adoption." },
+            "kaspa": { n: "Kaspa", s: "KAS", i: "Fastest PoW blockchain using BlockDAG technology.", b: "Fair launch with no VC pre-mine.", g: "Superior speed and decentralized mining narrative.", r: "Delayed smart contract support." },
+            "celestia": { n: "Celestia", s: "TIA", i: "First modular blockchain for data availability.", b: "Polychain, Bain Capital.", g: "Foundation for the modular blockchain era.", r: "High inflation from early stakers." },
+            "fetch-ai": { n: "Fetch.ai", s: "FET", i: "Decentralized platform for AI autonomous agents.", b: "ASI Alliance and AI sector hype.", g: "Artificial intelligence boom in crypto.", r: "Early-stage tech with high speculation." },
+            "aptos": { n: "Aptos", s: "APT", i: "L1 built with Move language for safety and speed.", b: "Former Meta engineers and a16z.", g: "Parallel execution and high throughput.", r: "Significant VC token unlock pressure." },
+            "sui": { n: "Sui", s: "SUI", i: "Next-gen L1 focused on asset ownership and latency.", b: "Mysten Labs, Binance Labs.", g: "Game-centric design and high scalability.", r: "Direct competition from Aptos and Solana." },
+            "sei-network": { n: "Sei", s: "SEI", i: "L1 optimized for high-frequency trading exchanges.", b: "Coinbase Ventures and Multicoin.", g: "Parallelized EVM performance.", r: "Need for more dApp developers." },
+            "bittensor": { n: "Bittensor", s: "TAO", i: "Decentralized marketplace for machine learning.", b: "The forefront of decentralized AI.", g: "Rewarding AI compute and model creation.", r: "Highly technical; difficult for retail." },
+            "akash-network": { n: "Akash", s: "AKT", i: "Decentralized cloud computing and GPU marketplace.", b: "Used by AI startups for cheaper compute.", g: "Real-world utility in the global GPU shortage.", r: "Competition from Amazon and Google." },
+            "beam": { n: "Beam", s: "BEAM", i: "Gaming network and ecosystem by Merit Circle.", b: "Merit Circle DAO.", g: "Widespread gaming hub adoption.", r: "Market dependent on gaming success." },
+            "dogecoin": { n: "Dogecoin", s: "DOGE", i: "The original meme coin; used as a tipping currency.", b: "Strongly endorsed by Elon Musk.", g: "Potential X.com payment integration.", r: "No supply cap and high volatility." },
+            "shiba-inu": { n: "Shiba Inu", s: "SHIB", i: "Meme-originated ecosystem with L2 Shibarium.", b: "Massive retail community (ShibArmy).", g: "Shibarium adoption and token burning.", r: "Massive circulating supply." },
+            "pepe": { n: "Pepe", s: "PEPE", i: "Community-driven meme coin based on internet culture.", b: "Pure social media hype.", g: "Viral cultural movement.", r: "Zero utility; price based only on hype." },
+            "dogwifhat": { n: "Dogwifhat", s: "WIF", i: "The leading viral meme on Solana.", b: "Solana community influencers.", g: "Dominant meme of the current cycle.", r: "Extreme price manipulation risks." },
+            "bonk": { n: "Bonk", s: "BONK", i: "Solana's native community and reward coin.", b: "Integrated into the Solana ecosystem.", g: "Revival of Solana retail interest.", r: "Overshadowed by newer memes." },
+            "floki": { n: "Floki", s: "FLOKI", i: "Meme coin evolving into a gaming and utility project.", b: "Huge global marketing campaigns.", g: "Valhalla game launch and DeFi tools.", r: "Heavy reliance on marketing hype." },
+            "brett": { n: "Brett", s: "BRETT", i: "Top meme coin on the Base L2 network.", b: "Coinbase L2 growth.", g: "Base chain's most iconic mascot.", r: "Base network dependence." },
+            "popcat": { n: "Popcat", s: "POPCAT", i: "Viral Solana cat meme.", b: "Solana retail users.", g: "Viral appeal to internet users.", r: "Zero utility risk." },
+            "book-of-meme": { n: "BOME", s: "BOME", i: "A digital archive of meme history on-chain.", b: "Created by artist Darkfarms.", g: "Cultural preservation narrative.", r: "Short-term speculative bubble risk." },
+            "mog-coin": { n: "Mog Coin", s: "MOG", i: "Meme focusing on internet dominance/style.", b: "Underground internet culture.", g: "Strong niche community growth.", r: "Low liquidity volatility." }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const cid = params.get('coin');
+
+        if (cid && cdb[cid]) {
+            const data = cdb[cid];
+            document.getElementById('coin-name').innerText = data.n;
+            document.getElementById('coin-symbol').innerText = data.s + " | Strategic Analysis";
+            document.getElementById('id-text').innerText = data.i;
+            document.getElementById('back-text').innerText = data.b;
+            document.getElementById('growth-text').innerText = data.g;
+            document.getElementById('risk-text').innerText = data.r;
+        } else {
+            document.getElementById('content-area').innerHTML = `<div class="text-center py-5"><h2>Please select a coin from the Home page.</h2></div>`;
+        }
+    </script>
+</body>
+</html>
