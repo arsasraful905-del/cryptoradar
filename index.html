@@ -3,10 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CryptoRadar 24/7 - Professional Crypto Intelligence">
-    <title>CryptoRadar 24/7 | Market Intelligence</title>
+    <title>CryptoRadar 24/7 | Intelligent Market Tracker</title>
     
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico">
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -14,101 +13,77 @@
     <style>
         :root { --bg: #0b1120; --card: #1e293b; --accent: #38bdf8; --text: #f8fafc; --up: #22c55e; --down: #ef4444; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding-bottom: 50px; }
-        
-        /* Navigation & Logo Area */
         .navbar { background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 0; }
-        .logo-placeholder { width: 40px; height: 40px; background: #334155; border-radius: 8px; margin-right: 10px; display: inline-block; vertical-align: middle; }
-
-        /* Category & Table Styling */
+        .logo-placeholder { width: 35px; height: 35px; background: #334155; border-radius: 6px; margin-right: 10px; display: inline-block; vertical-align: middle; }
         .category-box { background: var(--card); border-radius: 15px; padding: 20px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.05); }
         .category-title { color: var(--accent); font-weight: 700; border-left: 4px solid var(--accent); padding-left: 12px; font-size: 1.1rem; }
-        
         .coin-row { display: grid; grid-template-columns: 2.5fr 1.2fr 1fr; align-items: center; padding: 15px 8px; border-bottom: 1px solid rgba(255,255,255,0.05); cursor: pointer; transition: 0.2s; }
         .coin-row:hover { background: rgba(56, 189, 248, 0.05); }
-        
         .price-up { color: var(--up); font-weight: 600; }
         .price-down { color: var(--down); font-weight: 600; }
-        
-        .view-more-btn { color: var(--accent); font-size: 0.8rem; font-weight: 600; cursor: pointer; border: 1px solid var(--accent); padding: 4px 12px; border-radius: 20px; transition: 0.3s; }
-        .view-more-btn:hover { background: var(--accent); color: var(--bg); }
-        
-        .coin-img { width: 26px; height: 26px; margin-right: 10px; border-radius: 50%; background: #334155; }
+        .view-more-btn { color: var(--accent); font-size: 0.8rem; font-weight: 600; cursor: pointer; border: 1px solid var(--accent); padding: 4px 12px; border-radius: 20px; }
+        .coin-img { width: 26px; height: 26px; margin-right: 10px; border-radius: 50%; }
         .hidden-coins { display: none; }
-
-        /* Advertisement / Image Space Placeholder */
-        .promo-banner { width: 100%; height: 100px; background: rgba(56, 189, 248, 0.05); border: 1px dashed var(--accent); border-radius: 12px; margin: 20px 0; display: flex; align-items: center; justify-content: center; color: var(--accent); font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
     <nav class="navbar sticky-top">
-        <div class="container d-flex justify-content-between align-items-center">
+        <div class="container">
             <a class="navbar-brand fw-bold" href="index.html">
-                <div class="logo-placeholder"></div> CRYPTORADAR <span style="color:var(--accent)">24/7</span>
+                <div class="logo-placeholder"></div>
+                CRYPTORADAR <span style="color:var(--accent)">24/7</span>
             </a>
-            </div>
+        </div>
     </nav>
 
     <div class="container mt-4">
         <div class="text-center mb-5">
-            <h1 class="fw-bold h3">Global Market Intelligence</h1>
-            <p class="text-secondary small">Real-time Asset Monitoring & AI Prediction</p>
+            <h1 class="fw-bold h3">Market Intelligence</h1>
+            <p class="text-secondary small">Real-time Analysis of 50 Global Strategic Assets</p>
         </div>
 
-        <div id="market-giants"></div>
-        <div id="defi-infra"></div>
-        <div id="layer-2"></div>
-        <div id="ai-gems"></div>
-        <div id="meme-coins"></div>
-
-        <div class="promo-banner">Space for Advertisement or Image Banner</div>
+        <div id="cat-1"></div>
+        <div id="cat-2"></div>
+        <div id="cat-3"></div>
+        <div id="cat-4"></div>
+        <div id="cat-5"></div>
     </div>
 
     <script>
         const config = [
-            { id: "market-giants", name: "Market Giants (Safe)", list: "bitcoin,ethereum,solana,binancecoin,ripple,cardano,avalanche-2,polkadot,chainlink,tron" },
-            { id: "defi-infra", name: "DeFi & Infrastructure", list: "uniswap,cosmos,internet-computer,near,lido-dao,the-graph,aave,maker,stacks,render-token" },
-            { id: "layer-2", name: "Layer-2 Solutions", list: "matic-network,arbitrum,optimism,immutable-x,mantle,starknet,metis-token,manta-network,celo,skale" },
-            { id: "ai-gems", name: "Emerging AI Gems", list: "injective-protocol,kaspa,celestia,fetch-ai,aptos,sui,sei-network,bittensor,akash-network,beam" },
-            { id: "meme-coins", name: "Meme Coins (High Risk)", list: "dogecoin,shiba-inu,pepe,dogwifhat,bonk,floki,brett,popcat,book-of-meme,mog-coin" }
+            { id: "cat-1", name: "Market Giants", list: "bitcoin,ethereum,solana,binancecoin,ripple,cardano,avalanche-2,polkadot,chainlink,tron" },
+            { id: "cat-2", name: "DeFi & Infrastructure", list: "uniswap,cosmos,internet-computer,near,lido-dao,the-graph,aave,maker,stacks,render-token" },
+            { id: "cat-3", name: "Layer-2 Solutions", list: "matic-network,arbitrum,optimism,immutable-x,mantle,starknet,metis-token,manta-network,celo,skale" },
+            { id: "cat-4", name: "AI & Emerging", list: "injective-protocol,kaspa,celestia,fetch-ai,aptos,sui,sei-network,bittensor,akash-network,beam" },
+            { id: "cat-5", name: "High Risk Memes", list: "dogecoin,shiba-inu,pepe,dogwifhat,bonk,floki,brett,popcat,book-of-meme,mog-coin" }
         ];
 
-        async function fetchMarketData() {
+        async function loadData() {
             for (const cat of config) {
                 try {
-                    const response = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${cat.list}&order=market_cap_desc&sparkline=false`);
-                    const data = await response.json();
-                    renderCategory(cat, data);
-                } catch (e) {
-                    console.error("Error fetching " + cat.name);
-                }
-                // API Rate limit এড়াতে সামান্য বিরতি
-                await new Promise(r => setTimeout(r, 500));
+                    const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${cat.list}&order=market_cap_desc&sparkline=false`);
+                    const data = await res.json();
+                    render(cat, data);
+                } catch (e) { console.error(e); }
+                await new Promise(r => setTimeout(r, 600));
             }
         }
 
-        function renderCategory(cat, data) {
+        function render(cat, data) {
             const container = document.getElementById(cat.id);
-            let coinRows = "";
-
-            data.forEach((coin, index) => {
+            let rows = "";
+            data.forEach((coin, i) => {
                 const price = coin.current_price < 1 ? coin.current_price.toFixed(6) : coin.current_price.toLocaleString();
-                const change = coin.price_change_percentage_24h.toFixed(2);
-                const isUp = change >= 0;
-
-                coinRows += `
-                    <div class="coin-row ${index > 0 ? 'hidden-coins ' + cat.id + '-extra' : ''}" onclick="window.location.href='insights.html?coin=${coin.id}'">
+                rows += `
+                    <div class="coin-row ${i > 0 ? 'hidden-coins ' + cat.id + '-extra' : ''}" onclick="window.location.href='insights.html?coin=${coin.id}'">
                         <div class="d-flex align-items-center">
                             <img src="${coin.image}" class="coin-img">
-                            <div>
-                                <div class="fw-bold">${coin.symbol.toUpperCase()}</div>
-                                <div class="text-secondary" style="font-size: 0.7rem;">${coin.name}</div>
-                            </div>
+                            <div><div class="fw-bold text-uppercase">${coin.symbol}</div><div class="text-secondary small">${coin.name}</div></div>
                         </div>
                         <div class="text-end fw-bold">$${price}</div>
-                        <div class="text-end ${isUp ? 'price-up' : 'price-down'}">${change}%</div>
-                    </div>
-                `;
+                        <div class="text-end ${coin.price_change_percentage_24h >= 0 ? 'price-up' : 'price-down'}">${coin.price_change_percentage_24h.toFixed(2)}%</div>
+                    </div>`;
             });
 
             container.innerHTML = `
@@ -117,22 +92,17 @@
                         <div class="category-title">${cat.name}</div>
                         <div class="view-more-btn" onclick="toggle('${cat.id}-extra', this)">View More ▼</div>
                     </div>
-                    <div class="row text-secondary small fw-bold mb-2 px-2">
-                        <div class="col-6">ASSET</div><div class="col-3 text-end">PRICE</div><div class="col-3 text-end">24H %</div>
-                    </div>
-                    ${coinRows}
-                </div>
-            `;
+                    ${rows}
+                </div>`;
         }
 
-        function toggle(className, btn) {
-            const extra = document.querySelectorAll('.' + className);
+        function toggle(cls, btn) {
+            const extra = document.querySelectorAll('.' + cls);
             const isHidden = extra[0].style.display === "none" || extra[0].style.display === "";
             extra.forEach(el => el.style.display = isHidden ? "grid" : "none");
             btn.innerText = isHidden ? "Show Less ▲" : "View More ▼";
         }
-
-        fetchMarketData();
+        loadData();
     </script>
 </body>
 </html>
