@@ -3,228 +3,152 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asset Strategic Insights | CryptoRadar 24/7</title>
+    <title>Token Insights | CryptoRadar 24/7</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-    <style>
-        :root {
-            --p-bg: #0b1120;
-            --s-bg: #1e293b;
-            --accent: #38bdf8;
-            --white: #f8fafc;
-            --danger: #ef4444;
-            --success: #22c55e;
-            --warning: #f59e0b;
-        }
-        body { font-family: 'Inter', sans-serif; background: var(--p-bg); color: var(--white); line-height: 1.6; -webkit-user-select: none; user-select: none; }
-        .navbar { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .detail-card { background: var(--s-bg); border-radius: 24px; padding: 30px; margin-top: 20px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
-        
-        #chart-container { height: 480px; width: 100%; border-radius: 15px; overflow: hidden; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.1); }
-        
-        .info-header { border-bottom: 2px solid rgba(56, 189, 248, 0.2); margin-bottom: 25px; padding-bottom: 15px; }
-        .info-box { background: rgba(255,255,255,0.03); padding: 20px; border-radius: 15px; margin-bottom: 20px; border-left: 5px solid var(--accent); transition: 0.3s; height: 100%; }
-        .info-box.risk { border-left-color: var(--danger); }
-        .info-box.signal { border-left-color: var(--success); background: rgba(34, 197, 94, 0.05); }
-        
-        .info-title { color: var(--accent); font-weight: 700; margin-bottom: 8px; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 1px; }
-        .info-content { color: #cbd5e1; font-size: 1rem; }
-        
-        .signal-badge { font-weight: 800; padding: 8px 20px; border-radius: 10px; display: inline-block; margin-top: 15px; letter-spacing: 1px; }
-        .buy { background: var(--success); color: white; box-shadow: 0 0 15px rgba(34, 197, 94, 0.4); }
-        .sell { background: var(--danger); color: white; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
-        .hold { background: #eab308; color: white; box-shadow: 0 0 15px rgba(234, 179, 8, 0.4); }
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-        .back-btn { color: var(--accent); text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; margin-bottom: 15px; transition: 0.3s; }
-        .back-btn:hover { color: white; transform: translateX(-5px); }
-        footer { padding: 30px 0; text-align: center; opacity: 0.6; font-size: 0.9rem; }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root { --bg: #0b1120; --card: #1e293b; --accent: #38bdf8; --text: #f8fafc; }
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 40px; }
+        
+        .navbar { background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 12px 0; }
+        .logo-placeholder { width: 35px; height: 35px; background: #334155; border-radius: 6px; margin-right: 10px; display: inline-block; vertical-align: middle; }
+
+        .signal-card { padding: 20px; border-radius: 15px; font-weight: bold; text-align: center; font-size: 1.3rem; margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.1); transition: 0.3s; }
+        
+        #chart-container { height: 450px; background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px; }
+        
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .info-card { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
+        .label { color: #94a3b8; font-size: 0.75rem; display: block; margin-bottom: 5px; }
+        .value { font-size: 1rem; font-weight: 600; }
+        
+        .up { color: #22c55e; }
+        .down { color: #ef4444; }
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 999; }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="index.html"><span style="color:var(--accent)">CRYPTORADAR</span> 24/7</a>
-        </div>
-    </nav>
-
-    <div class="container mt-4 mb-5">
-        <a href="index.html" class="back-btn">← Back to Market Explorer</a>
-        
-        <div id="content-area">
-            <div class="detail-card">
-                <div class="info-header d-flex justify-content-between align-items-end">
-                    <div>
-                        <h1 id="coin-name" class="display-6 fw-bold text-capitalize">Asset Details</h1>
-                        <p id="coin-symbol" class="text-secondary text-uppercase fw-bold m-0">7-Day Technical Analysis</p>
-                    </div>
-                    <div id="live-price" class="h2 fw-bold text-info">--</div>
-                </div>
-
-                <div id="chart-container">
-                    <div id="tradingview_widget" style="height: 100%;"></div>
-                </div>
-
-                <div class="row g-3">
-                    <div class="col-12 mb-3">
-                        <div class="info-box signal" id="signal-box">
-                            <div class="info-title">Market Action Signal (Based on 7-Day Trend)</div>
-                            <div id="signal-text" class="info-content">Scanning market indicators for long-term entry...</div>
-                            <div id="signal-badge"></div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-6">
-                        <div class="info-box">
-                            <div class="info-title">Identity & Fundamental Background</div>
-                            <div id="id-text" class="info-content">Loading...</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-box">
-                            <div class="info-title">Institutional & Whale Backing</div>
-                            <div id="back-text" class="info-content">Loading...</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-box">
-                            <div class="info-title">Growth Logic & Value Drivers</div>
-                            <div id="growth-text" class="info-content">Loading...</div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info-box risk">
-                            <div class="info-title">Primary Risk Factors</div>
-                            <div id="risk-text" class="info-content">Loading...</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div id="loader" class="loading-overlay">
+        <div class="text-center">
+            <div class="spinner-border text-info mb-2"></div>
+            <p>লাইভ ডাটা সিঙ্ক হচ্ছে...</p>
         </div>
     </div>
 
-    <footer>
-        <p>&copy; 2026 CryptoRadar 24/7. Trusted Market Insights.</p>
-    </footer>
+    <nav class="navbar mb-4">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <div class="logo-placeholder"></div>
+                CRYPTORADAR <span style="color:var(--accent)">24/7</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="d-flex align-items-center mb-4">
+            <img id="coin-logo" src="" style="width: 50px; height: 50px; margin-right: 15px; border-radius: 50%;">
+            <div>
+                <h1 id="coin-name" class="h3 mb-0">---</h1>
+                <span id="coin-symbol" class="text-secondary text-uppercase">---</span>
+            </div>
+            <div class="ms-auto text-end">
+                <h2 id="live-price" class="h4 mb-0">$0.00</h2>
+                <span id="price-change" class="small">0.00%</span>
+            </div>
+        </div>
+
+        <div id="signal-box" class="signal-card">
+            বিশ্লেষণ করা হচ্ছে...
+        </div>
+
+        <div id="chart-container">
+            <div id="tv-chart" style="height: 100%;"></div>
+        </div>
+        
+
+        <div class="info-grid">
+            <div class="info-card"><span class="label">মার্কেট র‍্যাঙ্ক</span><span id="rank" class="value">---</span></div>
+            <div class="info-card"><span class="label">২৪ঘণ্টা হাই (High)</span><span id="high" class="value">---</span></div>
+            <div class="info-card"><span class="label">২৪ঘণ্টা লো (Low)</span><span id="low" class="value">---</span></div>
+            <div class="info-card"><span class="label">টোটাল ভলিউম</span><span id="volume" class="value">---</span></div>
+        </div>
+
+        <div class="mt-4 text-center text-secondary small">
+            --- AI Analytics Engine v2.0 ---
+        </div>
+    </div>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+
     <script>
-        // MASTER DATABASE - 50 TOP ASSETS
-        const cdb = {
-            "bitcoin": { n: "Bitcoin", s: "BTC", i: "Digital Gold; first decentralized peer-to-peer electronic cash system.", b: "BlackRock, MicroStrategy, Tesla, Fidelity.", g: "Halving cycles, limited 21M supply, and institutional adoption.", r: "Regulatory shifts and high market volatility." },
-            "ethereum": { n: "Ethereum", s: "ETH", i: "Leading smart contract platform powering DeFi and Web3 applications.", b: "J.P. Morgan, Microsoft, and massive developer ecosystem.", g: "Transition to PoS, deflationary burn mechanism, and L2 growth.", r: "Gas fee volatility and network scaling competition." },
-            "solana": { n: "Solana", s: "SOL", i: "High-performance L1 blockchain for scalable decentralized apps.", b: "Jump Crypto, Andreessen Horowitz (a16z).", g: "Extremely fast speed, low costs, and massive NFT/Meme ecosystem.", r: "History of network outages and centralization claims." },
-            "binancecoin": { n: "BNB", s: "BNB", i: "Utility token for the Binance exchange and BNB Smart Chain.", b: "Binance Global (World's largest exchange).", g: "Frequent token burns and deep integration with Binance services.", r: "International regulatory pressure on centralized exchanges." },
-            "ripple": { n: "XRP", s: "XRP", i: "Real-time settlement system for cross-border banking transactions.", b: "SBI Holdings, Santander, and 100+ global banks.", g: "Massive institutional demand for payment liquidity.", r: "Legal uncertainty regarding SEC court decisions." },
-            "cardano": { n: "Cardano", s: "ADA", i: "Research-driven L1 blockchain focusing on security and scalability.", b: "IOHK, Emurgo, and long-term academic backing.", g: "Phased scientific development and global identity solutions.", r: "Slow deployment of new features compared to rivals." },
-            "avalanche-2": { n: "Avalanche", s: "AVAX", i: "Modular platform for custom blockchain networks (Subnets).", b: "Ava Labs, Deloitte, and Amazon AWS.", g: "High-speed subnets for institutional private chains.", r: "Inflationary token unlock schedules for early backers." },
-            "polkadot": { n: "Polkadot", s: "DOT", i: "Interoperability protocol connecting specialized blockchains.", b: "Web3 Foundation and Dr. Gavin Wood.", g: "Parachain ecosystem and cross-chain messaging security.", r: "Technical barrier for developers and low retail adoption." },
-            "chainlink": { n: "Chainlink", s: "LINK", i: "Decentralized oracle network connecting data to smart contracts.", b: "Google Cloud, SWIFT, and major DeFi protocols.", g: "Universal standard for on-chain data and CCIP technology.", r: "Dependency on the health of the broader DeFi sector." },
-            "tron": { n: "TRON", s: "TRX", i: "L1 blockchain focused on entertainment and stablecoin transfers.", b: "Justin Sun and massive global USDT liquidity.", g: "Highest transaction volume for USDT in the world.", r: "Centralized node structure and regulatory scrutiny." },
-            "uniswap": { n: "Uniswap", s: "UNI", i: "Leading decentralized trading protocol on Ethereum.", b: "Paradigm, a16z, and the DeFi community.", g: "Dominance in DEX trading volume and governance.", r: "Potential regulatory crackdowns on DEX platforms." },
-            "cosmos": { n: "Cosmos", s: "ATOM", i: "The 'Internet of Blockchains' enabling cross-chain communication.", b: "Interchain Foundation and 250+ connected apps.", g: "Growth of IBC protocol usage by major chains.", r: "ATOM token's limited value capture mechanism." },
-            "internet-computer": { n: "Internet Computer", s: "ICP", i: "Blockchain that aims to replace traditional cloud hosting.", b: "Dfinity Foundation and top cryptographers.", g: "On-chain web hosting and high-speed execution.", r: "Centralization concerns and complex tokenomics." },
-            "near": { n: "NEAR Protocol", s: "NEAR", i: "Developer-friendly L1 focusing on usability and sharding.", b: "Tiger Global, Coinbase Ventures.", g: "Focus on AI integration and easy web2-to-web3 migration.", r: "Stiff competition from Solana and Ethereum L2s." },
-            "lido-dao": { n: "Lido", s: "LDO", i: "Largest liquid staking solution for Ethereum.", b: "Dragonfly Capital and institutional stakers.", g: "Dominance in ETH staking and liquid liquidity.", r: "Regulatory risk for staking protocols." },
-            "the-graph": { n: "The Graph", s: "GRT", i: "Indexing protocol for querying data from blockchains.", b: "Used by almost all dApps; Multicoin Capital.", g: "Essential infrastructure; the 'Google' of Web3.", r: "Migration from centralized to decentralized service." },
-            "aave": { n: "Aave", s: "AAVE", i: "Leading decentralized liquidity market for lending.", b: "Widespread institutional usage in DeFi.", g: "Safe lending models and multichain expansion.", r: "Smart contract bugs or liquidation failures." },
-            "maker": { n: "Maker", s: "MKR", i: "Decentralized organization behind the DAI stablecoin.", b: "Pioneer in DeFi; massive asset treasury.", g: "Real-world asset (RWA) backing for stablecoins.", r: "Regulatory pressure on decentralized stablecoins." },
-            "stacks": { n: "Stacks", s: "STX", i: "A Bitcoin Layer for smart contracts and dApps.", b: "First token offering qualified by the SEC.", g: "Bitcoin ecosystem growth and L2 narrative.", r: "Dependency on Bitcoin's network speed." },
-            "render-token": { n: "Render", s: "RNDR", i: "Decentralized GPU rendering for AI and graphics.", b: "Multicoin Capital and Apple ecosystem partners.", g: "Boom in AI demand for GPU computing power.", r: "Competition from centralized GPU farms." },
-            "matic-network": { n: "Polygon", s: "POL", i: "Ethereum scaling framework and ZK-rollup ecosystem.", b: "Disney, Nike, Starbucks, and Reddit.", g: "Aggregated liquidity and enterprise adoption of ZK-EVM.", r: "Heavy competition from other Ethereum L2s." },
-            "arbitrum": { n: "Arbitrum", s: "ARB", i: "Leading Ethereum L2 rollup with highest TVL.", b: "Offchain Labs and top DeFi projects.", g: "Lowest fees and highest liquidity among rollups.", r: "Large token unlocks for early investors." },
-            "optimism": { n: "Optimism", s: "OP", i: "Ethereum L2 focused on the 'Superchain' network.", b: "Coinbase (via Base) and Paradigm.", g: "Standard for building new L2s (OP Stack).", r: "Intense L2 landscape competition." },
-            "immutable-x": { n: "Immutable", s: "IMX", i: "The premier L2 for Web3 gaming and NFTs.", b: "Ubisoft, GameStop, and Warner Bros.", g: "Explosion of high-quality blockchain games.", r: "Slow mainstream adoption of NFT games." },
-            "mantle": { n: "Mantle", s: "MNT", i: "Modular L2 network with a massive treasury.", b: "BitDAO and the largest DAO treasury.", g: "Yield-bearing assets and ecosystem incentives.", r: "Newer network with evolving security." },
-            "starknet": { n: "Starknet", s: "STRK", i: "ZK-Rollup using STARK proofs for extreme scaling.", b: "StarkWare and world-class ZK researchers.", g: "High-performance apps and native account abstraction.", r: "Complex developer language (Cairo)." },
-            "metis-token": { n: "Metis", s: "METIS", i: "L2 focused on decentralized autonomous organizations.", b: "Strong community and decentralization focus.", g: "Decentralized sequencer technology.", r: "Low liquidity compared to major L2s." },
-            "manta-network": { n: "Manta", s: "MANTA", i: "Modular L2 for ZK-applications.", b: "Binance Labs and Polychain.", g: "Low gas using Celestia data availability.", r: "New project market volatility." },
-            "celo": { n: "Celo", s: "CELO", i: "Mobile-first blockchain for payments.", b: "Jack Dorsey and Andreessen Horowitz.", g: "Transition to Ethereum L2 for better liquidity.", r: "Lagging behind larger L1/L2 ecosystems." },
-            "skale": { n: "SKALE", s: "SKL", i: "Zero-fee blockchain for Ethereum scaling.", b: "Winklevoss Capital.", g: "Gas-less transactions for gaming and apps.", r: "Low token demand due to zero-fee model." },
-            "injective-protocol": { n: "Injective", s: "INJ", i: "The fastest L1 for decentralized finance applications.", b: "Pantera Capital and Mark Cuban.", g: "Institutional focus and burn mechanism.", r: "Market cap outstripping current adoption." },
-            "kaspa": { n: "Kaspa", s: "KAS", i: "Fastest PoW blockchain using BlockDAG technology.", b: "Fair launch with no VC pre-mine.", g: "Superior speed and decentralized mining narrative.", r: "Delayed smart contract support." },
-            "celestia": { n: "Celestia", s: "TIA", i: "First modular blockchain for data availability.", b: "Polychain, Bain Capital.", g: "Foundation for the modular blockchain era.", r: "High inflation from early stakers." },
-            "fetch-ai": { n: "Fetch.ai", s: "FET", i: "Decentralized platform for AI autonomous agents.", b: "ASI Alliance and AI sector hype.", g: "Artificial intelligence boom in crypto.", r: "Early-stage tech with high speculation." },
-            "aptos": { n: "Aptos", s: "APT", i: "L1 built with Move language for safety and speed.", b: "Former Meta engineers and a16z.", g: "Parallel execution and high throughput.", r: "Significant VC token unlock pressure." },
-            "sui": { n: "Sui", s: "SUI", i: "Next-gen L1 focused on asset ownership and latency.", b: "Mysten Labs, Binance Labs.", g: "Game-centric design and high scalability.", r: "Direct competition from Aptos and Solana." },
-            "sei-network": { n: "Sei", s: "SEI", i: "L1 optimized for high-frequency trading exchanges.", b: "Coinbase Ventures and Multicoin.", g: "Parallelized EVM performance.", r: "Need for more dApp developers." },
-            "bittensor": { n: "Bittensor", s: "TAO", i: "Decentralized marketplace for machine learning.", b: "The forefront of decentralized AI.", g: "Rewarding AI compute and model creation.", r: "Highly technical; difficult for retail." },
-            "akash-network": { n: "Akash", s: "AKT", i: "Decentralized cloud computing and GPU marketplace.", b: "Used by AI startups for cheaper compute.", g: "Real-world utility in the global GPU shortage.", r: "Competition from Amazon and Google." },
-            "beam": { n: "Beam", s: "BEAM", i: "Gaming network and ecosystem by Merit Circle.", b: "Merit Circle DAO.", g: "Widespread gaming hub adoption.", r: "Market dependent on gaming success." },
-            "dogecoin": { n: "Dogecoin", s: "DOGE", i: "The original meme coin; used as a viral digital currency.", b: "Strongly backed by Elon Musk and retail culture.", g: "Integration into X.com and mainstream payment systems.", r: "Unlimited supply and extreme price swings." },
-            "shiba-inu": { n: "Shiba Inu", s: "SHIB", i: "Meme-based ecosystem with its own L2 (Shibarium).", b: "Massive retail community and decentralized DAO.", g: "Burn mechanisms and growth of the Shibarium network.", r: "Extreme circulating supply and hype dependency." },
-            "pepe": { n: "Pepe", s: "PEPE", i: "Community-driven meme coin based on internet Frog culture.", b: "Social media virality and massive exchange listings.", g: "Cultural movement and high liquidity.", r: "Zero utility; price relies entirely on sentiment." },
-            "dogwifhat": { n: "Dogwifhat", s: "WIF", i: "The leading viral meme coin on the Solana network.", b: "Solana community influencers.", g: "Dominant meme of the current market cycle.", r: "Extreme price manipulation risks and zero utility." },
-            "bonk": { n: "Bonk", s: "BONK", i: "Solana's native community reward and meme coin.", b: "Integrated into the Solana dApp ecosystem.", g: "Revival of retail interest in Solana.", r: "High volatility and competition from newer memes." },
-            "floki": { n: "Floki", s: "FLOKI", i: "Meme coin evolving into a gaming and utility project.", b: "Huge global marketing campaigns.", g: "Valhalla game launch and DeFi ecosystem tools.", r: "Heavy reliance on continuous marketing hype." },
-            "brett": { n: "Brett", s: "BRETT", i: "Top meme coin on the Base L2 network (Coinbase).", b: "Growth of the Base ecosystem.", g: "The most iconic mascot of the Base chain.", r: "Dependency on the adoption of the Base network." },
-            "popcat": { n: "Popcat", s: "POPCAT", i: "Viral Solana-based cat meme coin.", b: "Solana retail trading community.", g: "Massive internet appeal and viral marketing.", r: "High speculative risk; no fundamental utility." },
-            "book-of-meme": { n: "BOME", s: "BOME", i: "A digital archive of meme history on-chain.", b: "Created by legendary artist Darkfarms.", g: "Unique cultural preservation narrative.", r: "Short-term speculative bubble risks." },
-            "mog-coin": { n: "Mog Coin", s: "MOG", i: "Meme focusing on internet dominance and style.", b: "Underground internet culture and loyal community.", g: "Strong niche growth among Gen-Z traders.", r: "Low liquidity volatility compared to major memes." }
-        };
+        async function initDetails() {
+            const params = new URLSearchParams(window.location.search);
+            const coinId = params.get('coin') || 'bitcoin';
 
-        const params = new URLSearchParams(window.location.search);
-        const cid = params.get('coin') || 'bitcoin';
-
-        // ১. ডাটা লোড এবং এনালাইসিস
-        async function loadStrategicAnalysis() {
-            const data = cdb[cid] || { n: cid, s: cid, i: "Strategic data currently loading.", b: "Institutional analysis pending.", g: "Scanning market drivers.", r: "Standard market risk." };
-            
-            document.getElementById('coin-name').innerText = data.n;
-            document.getElementById('coin-symbol').innerText = data.s + " | Strategic Analysis";
-            document.getElementById('id-text').innerText = data.i;
-            document.getElementById('back-text').innerText = data.b;
-            document.getElementById('growth-text').innerText = data.g;
-            document.getElementById('risk-text').innerText = data.r;
-
-            // লাইভ চার্ট লোড
-            new TradingView.widget({
-                "autosize": true,
-                "symbol": "BINANCE:" + data.s.toUpperCase() + "USDT",
-                "interval": "60", // ৭ দিনের ডাটা ভালো দেখানোর জন্য ১ ঘণ্টার ক্যান্ডেল সেরা
-                "timezone": "Etc/UTC",
-                "theme": "dark",
-                "style": "1",
-                "locale": "en",
-                "enable_publishing": false,
-                "hide_side_toolbar": false,
-                "container_id": "tradingview_widget"
-            });
-
-            // ২. মার্কেট এপিআই থেকে লাইভ পরামর্শ (Buy/Sell)
             try {
-                const res = await fetch(`https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=${cid}`);
-                const marketData = await res.json();
-                const coin = marketData[0];
-                const change7d = coin.price_change_percentage_7d_in_currency || coin.price_change_percentage_24h;
-                
-                document.getElementById('live-price').innerText = "$" + coin.current_price.toLocaleString();
-                
-                const sText = document.getElementById('signal-text');
-                const sBadge = document.getElementById('signal-badge');
-                const sBox = document.getElementById('signal-box');
+                const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&sparkline=false`);
+                const data = await res.json();
+                const mData = data.market_data;
 
-                if (change7d > 5) {
-                    sBox.className = "info-box signal buy-signal";
-                    sText.innerText = "The asset is showing strong bullish momentum over the last week. Current trend suggests high demand. Potentially a good entry for long-term growth.";
-                    sBadge.innerHTML = '<span class="signal-badge buy">STRONG BUY</span>';
-                } else if (change7d < -5) {
-                    sBox.className = "info-box risk sell-signal";
-                    sText.innerText = "The asset is currently in a correction phase. Downward pressure is visible in the 7-day trend. Recommended to wait for a confirmed support level.";
-                    sBadge.innerHTML = '<span class="signal-badge sell">WAIT / BEARISH</span>';
+                // ডাটা আপডেট
+                document.getElementById('coin-logo').src = data.image.large;
+                document.getElementById('coin-name').innerText = data.name;
+                document.getElementById('coin-symbol').innerText = data.symbol;
+                document.getElementById('live-price').innerText = `$${mData.current_price.usd.toLocaleString()}`;
+                
+                const change = mData.price_change_percentage_24h;
+                const changeEl = document.getElementById('price-change');
+                changeEl.innerText = `${change.toFixed(2)}%`;
+                changeEl.className = change >= 0 ? 'up' : 'down';
+
+                document.getElementById('rank').innerText = `#${data.market_cap_rank}`;
+                document.getElementById('high').innerText = `$${mData.high_24h.usd.toLocaleString()}`;
+                document.getElementById('low').innerText = `$${mData.low_24h.usd.toLocaleString()}`;
+                document.getElementById('volume').innerText = `$${mData.total_volume.usd.toLocaleString()}`;
+
+                // সিগন্যাল লজিক (AI ANALYSIS)
+                const signalBox = document.getElementById('signal-box');
+                if (change > 3) {
+                    signalBox.innerHTML = "🚀 STRONG BUY - মার্কেট উপরে যাচ্ছে";
+                    signalBox.style.color = "#22c55e";
+                    signalBox.style.background = "rgba(34, 197, 94, 0.1)";
+                    signalBox.style.borderColor = "#22c55e";
+                } else if (change < -3) {
+                    signalBox.innerHTML = "⚠️ STRONG SELL - রিস্ক আছে, সেল করুন";
+                    signalBox.style.color = "#ef4444";
+                    signalBox.style.background = "rgba(239, 68, 68, 0.1)";
+                    signalBox.style.borderColor = "#ef4444";
                 } else {
-                    sBox.className = "info-box hold-signal";
-                    sText.innerText = "Market consolidation in progress. Price movement is stable within a tight range. Best to hold and observe for a breakout direction.";
-                    sBadge.innerHTML = '<span class="signal-badge hold">HOLD / NEUTRAL</span>';
+                    signalBox.innerHTML = "⚖️ NEUTRAL - হোল্ড করুন বা অপেক্ষা করুন";
+                    signalBox.style.color = "#eab308";
+                    signalBox.style.background = "rgba(234, 179, 8, 0.1)";
+                    signalBox.style.borderColor = "#eab308";
                 }
-            } catch (e) {
-                document.getElementById('signal-text').innerText = "Real-time AI analysis is temporarily unavailable.";
+
+                // চার্ট লোড
+                new TradingView.widget({
+                    "autosize": true,
+                    "symbol": "BINANCE:" + data.symbol.toUpperCase() + "USDT",
+                    "interval": "60",
+                    "theme": "dark",
+                    "style": "1",
+                    "container_id": "tv-chart",
+                    "locale": "en",
+                    "enable_publishing": false,
+                    "hide_top_toolbar": false,
+                    "save_image": false
+                });
+
+                document.getElementById('loader').style.display = 'none';
+
+            } catch (error) {
+                document.getElementById('loader').innerHTML = "ডাটা লোড করতে সমস্যা হয়েছে। রিফ্রেশ দিন।";
             }
         }
-
-        loadStrategicAnalysis();
+        initDetails();
     </script>
 </body>
 </html>
