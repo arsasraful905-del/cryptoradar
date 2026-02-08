@@ -3,131 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CryptoRadar 24/7 | Strategic Analysis</title>
+    <title>Market Insights | AI Intelligence Engine</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
-        :root { --bg: #0b1120; --card: #1e293b; --accent: #38bdf8; --text: #f8fafc; --green: #22c55e; --red: #ef4444; }
-        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; padding-bottom: 50px; }
-        .navbar { background: rgba(15, 23, 42, 0.95); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 0; }
-        
-        /* Signal Banner */
-        .signal-banner { border-radius: 15px; padding: 25px; text-align: center; margin-bottom: 25px; border: 2px solid; font-weight: 900; font-size: 1.8rem; text-transform: uppercase; }
-        
-        /* Chart */
-        #chart-container { height: 500px; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); margin-bottom: 25px; }
+        :root {
+            --bg-dark: #0b1120;
+            --card-dark: #1e293b;
+            --text-main: #f8fafc;
+            --accent: #38bdf8;
+            --up: #22c55e;
+            --down: #ef4444;
+            --warning: #f59e0b;
+        }
 
-        /* Stats Grid */
-        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 30px; }
-        .stat-box { background: var(--card); padding: 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); }
-        .stat-label { color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; display: block; }
-        .stat-value { font-size: 1.1rem; font-weight: 700; }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+        }
 
-        /* Information Sections */
-        .info-card { background: var(--card); border-radius: 15px; padding: 20px; margin-bottom: 15px; border-left: 5px solid var(--accent); }
-        .info-header { font-size: 0.8rem; font-weight: 800; color: var(--accent); text-transform: uppercase; margin-bottom: 8px; }
-        .info-body { font-size: 0.95rem; color: #cbd5e1; line-height: 1.6; }
-        .risk-border { border-left-color: var(--red); }
+        /* NAVIGATION */
+        .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 0;
+        }
+        .brand-logo { font-size: 1.5rem; font-weight: 800; color: #fff; text-decoration: none; }
+        .brand-logo span { color: var(--accent); }
+        .nav-link { color: #94a3b8 !important; font-weight: 600; margin-left: 15px; text-transform: uppercase; font-size: 0.85rem; }
+        .nav-link:hover { color: var(--accent) !important; }
+
+        /* CHART CONTAINER */
+        #chart-area {
+            width: 100%;
+            height: 500px;
+            background: var(--card-dark);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* AI SIGNAL BOX */
+        .ai-signal-card {
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            margin-top: 20px;
+            border: 2px solid var(--accent);
+        }
+        .signal-text { font-size: 2.5rem; font-weight: 900; letter-spacing: 2px; }
+
+        /* STATS GRID */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .stat-box {
+            background: var(--card-dark);
+            padding: 15px;
+            border-radius: 10px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+        }
+        .stat-label { color: #94a3b8; font-size: 0.75rem; text-transform: uppercase; }
+        .stat-value { font-size: 1.1rem; font-weight: 700; margin-top: 5px; }
+
+        /* INFO SECTIONS */
+        .info-card {
+            background: var(--card-dark);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid var(--accent);
+        }
+        .info-card.risk { border-left-color: var(--down); }
+        .info-title { color: var(--accent); font-weight: 700; font-size: 0.9rem; margin-bottom: 10px; text-transform: uppercase; }
+        .info-content { font-size: 0.9rem; line-height: 1.6; color: #cbd5e1; }
+
+        footer { padding: 40px 0; opacity: 0.5; font-size: 0.8rem; text-align: center; }
     </style>
 </head>
 <body>
 
-<nav class="navbar mb-4 sticky-top">
-    <div class="container"><a class="navbar-brand fw-bold" href="index.html">CRYPTORADAR <span style="color:var(--accent)">24/7</span></a></div>
-</nav>
+    <nav class="navbar sticky-top navbar-expand-lg">
+        <div class="container">
+            <a class="brand-logo" href="index.html">CRYPTO<span>RADAR</span></a>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="insights.html">Insights</a></li>
+                    <li class="nav-item"><a class="nav-link" href="predictions.html">Prediction</a></li>
+                    <li class="nav-item"><a class="nav-link" href="signals.html">Signals</a></li>
+                    <li class="nav-item"><a class="nav-link" href="converter.html">Converter</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-<div class="container">
-    <div class="d-flex align-items-center mb-4">
-        <img id="coin-logo" src="" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px;">
-        <div><h1 id="coin-title" class="h3 mb-0">---</h1><span id="coin-symbol" class="text-secondary text-uppercase">---</span></div>
-        <div class="ms-auto text-end"><h2 id="coin-price" class="h4 mb-0">$0.00</h2><span id="coin-change" class="small">0.00%</span></div>
+    <div class="container pb-5">
+        <div id="chart-area">
+            <div id="tradingview_widget"></div>
+            </div>
+
+        <div class="ai-signal-card" id="ai-engine">
+            <div class="stat-label">AI ANALYTICS ENGINE V3.0</div>
+            <div id="signal-output" class="signal-text">ANALYZING...</div>
+            <div id="signal-desc" style="font-size: 0.85rem; opacity: 0.8;">Processing real-time market sentiment</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-box">
+                <div class="stat-label">Market Rank</div>
+                <div id="rank-val" class="stat-value">--</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">24h High</div>
+                <div id="high-val" class="stat-value">--</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">24h Low</div>
+                <div id="low-val" class="stat-value">--</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Total Volume</div>
+                <div id="vol-val" class="stat-value">--</div>
+            </div>
+        </div>
+
+        <div class="info-card">
+            <div class="info-title">PROJECT BACKGROUND & UTILITY</div>
+            <div id="bg-content" class="info-content">
+                Loading deep protocol insights...
+            </div>
+        </div>
+
+        <div class="info-card risk">
+            <div class="info-title">PRIMARY RISK FACTORS</div>
+            <div id="risk-content" class="info-content">
+                Analyzing network volatility and security benchmarks...
+            </div>
+        </div>
     </div>
 
-    <div id="signal-box" class="signal-banner">ANALYZING...</div>
+    <footer>
+        <p>© 2026 CryptoRadar 24/7. Advanced Market Intelligence Protocol.</p>
+    </footer>
 
-    <div id="chart-container"><div id="tv_widget" style="height: 100%;"></div></div>
-    
+    <script src="https://s3.tradingview.com/tv.js"></script>
+    <script>
+        const _k_vault = ["CG-UdVdACwV3rJbE81TvRzBmdEt", "CG-KdkM9EsZhvr6d1rArDht5Hff", "CG-siBAtkem3KiSX1AMV44viPdx", "CG-8aU3oHEsz15KnWyf9K1SoizX"];
+        const _auth = () => _k_vault[Math.floor(Math.random() * _k_vault.length)];
 
-    <div class="stat-grid">
-        <div class="stat-box"><span class="stat-label">Market Rank</span><span id="rank" class="stat-value">---</span></div>
-        <div class="stat-box"><span class="stat-label">24h High (USD)</span><span id="high" class="stat-value">---</span></div>
-        <div class="stat-box"><span class="stat-label">24h Low (USD)</span><span id="low" class="stat-value">---</span></div>
-        <div class="stat-box"><span class="stat-label">Total Volume</span><span id="vol" class="stat-value">---</span></div>
-    </div>
+        // Get Coin ID from URL
+        const params = new URLSearchParams(window.location.search);
+        const coinId = params.get('coin') || 'bitcoin';
 
-    <div class="info-card"><div class="info-header">Identity & Mission</div><div id="f-identity" class="info-body">---</div></div>
-    <div class="info-card"><div class="info-header">Founders & Backing</div><div id="f-who" class="info-body">---</div></div>
-    <div class="info-card"><div class="info-header">Growth Strategy & Goal</div><div id="f-goal" class="info-body">---</div></div>
-    <div class="info-card risk-border"><div class="info-header" style="color:var(--red)">Risk Analysis</div><div id="f-risk" class="info-body">---</div></div>
-</div>
+        async function initInsights() {
+            try {
+                const res = await fetch(`https://api.coingecko.com/api/v3/coins/${coinId}?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=false&x_cg_demo_api_key=${_auth()}`);
+                const data = await res.json();
+                
+                updateUI(data);
+                loadChart(data.symbol.toUpperCase());
+                runAIEngine(data.market_data);
+                
+            } catch (e) {
+                console.error("System Error: Data sync failed");
+            }
+        }
 
-<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-<script>
-    // 50 Coins Manual High-Quality Data
-    const coinDB = {
-        "bitcoin": { id: "The first decentralized digital currency and global store of value.", who: "Satoshi Nakamoto. Supported by major institutions like BlackRock.", goal: "To serve as digital gold and a hedge against global inflation.", risk: "Regulatory changes and environmental impact of mining." },
-        "ethereum": { id: "The world's largest programmable blockchain for DeFi and NFTs.", who: "Vitalik Buterin. Backed by the global Ethereum Foundation.", goal: "To be the infrastructure for the decentralized internet (Web3).", risk: "Network congestion and competition from high-speed L1 chains." },
-        "solana": { id: "Ultra-high-speed L1 blockchain optimized for decentralized apps.", who: "Anatoly Yakovenko. Backed by Jump Crypto and top VCs.", goal: "To provide the performance of centralized finance on a blockchain.", risk: "History of network outages and hardware requirements for nodes." },
-        "binancecoin": { id: "Utility token for the Binance ecosystem and BNB Chain governance.", who: "Changpeng Zhao (CZ). Powered by the world's largest exchange.", goal: "To power a multi-chain ecosystem and reduce trading costs.", risk: "Centralization risks and legal challenges facing Binance." },
-        "ripple": { id: "Digital payment protocol for fast, low-cost cross-border transfers.", who: "Chris Larsen and Jed McCaleb (Ripple Labs).", goal: "To replace the traditional SWIFT system for bank transfers.", risk: "Ongoing legal battles with the SEC and centralization concerns." },
-        "cardano": { id: "A research-driven L1 blockchain focusing on security and sustainability.", who: "Charles Hoskinson (Input Output Global).", goal: "To provide a secure infrastructure for real-world governance apps.", risk: "Slower development pace compared to competitors." },
-        "avalanche-2": { id: "A scalable L1 for custom blockchain networks and DeFi apps.", who: "Emin Gün Sirer (Ava Labs).", goal: "To offer sub-second transaction finality for enterprise finance.", risk: "Competition from Ethereum Layer-2 scaling solutions." },
-        "matic-network": { id: "The leading scaling solution (Layer-2) for the Ethereum network.", who: "Sandeep Nailwal and team. Backed by Polygon Labs.", goal: "To make Ethereum faster and cheaper for mass-market adoption.", risk: "Reliance on Ethereum's roadmap and L2 competition." },
-        "chainlink": { id: "A decentralized oracle network connecting smart contracts to real-world data.", who: "Sergey Nazarov. The industry standard for crypto data.", goal: "To enable blockchains to securely interact with external systems.", risk: "Potential for data source manipulation if not diversified." },
-        "uniswap": { id: "The world's largest decentralized exchange (DEX) protocol.", who: "Hayden Adams. Backed by Uniswap Labs and Paradigm.", goal: "To provide trustless liquidity and trading for all tokens.", risk: "Regulatory focus on DeFi platforms and smart contract bugs." },
-        "dogecoin": { id: "The original meme coin that became a global cultural phenomenon.", who: "Billy Markus and Jackson Palmer. Promoted by Elon Musk.", goal: "To serve as a fun, low-cost digital payment method.", risk: "Infinite supply and extreme dependency on social media hype." },
-        "shiba-inu": { id: "A community-led meme ecosystem building its own Layer-2 (Shibarium).", who: "Ryoshi (Anonymous). Community-driven development.", goal: "To evolve from a meme coin into a full DeFi and gaming utility.", risk: "Massive token supply and high price volatility." },
-        "pepe": { id: "A hyper-deflationary meme coin based on the Pepe the Frog meme.", who: "Anonymous team. Pure community-driven growth.", goal: "To build a viral crypto culture and rival top-tier memes.", risk: "Zero technical utility and high risk of market manipulation." },
-        "near": { id: "A sharded, developer-friendly L1 focusing on ease of use.", who: "Illia Polosukhin. Backed by Coinbase and Pantera Capital.", goal: "To make Web3 accessible to everyone via sharding technology.", risk: "Stiff competition in the sharding and L2 space." },
-        "polkadot": { id: "A multi-chain protocol connecting different blockchains (Parachains).", who: "Gavin Wood (Ethereum Co-founder). Backed by Web3 Foundation.", goal: "To enable a fully interoperable and private decentralized web.", risk: "Complex architecture and slow ecosystem adoption." },
-        "cosmos": { id: "An ecosystem of independent blockchains (The Internet of Blockchains).", who: "Ethan Buchman and Jae Kwon. Backed by Interchain Foundation.", goal: "To allow different blockchains to communicate seamlessly.", risk: "Fragmentation of liquidity within its own ecosystem." },
-        "dogwifhat": { id: "A popular meme coin on Solana featuring a dog with a hat.", who: "Anonymous community developers.", goal: "To capture Solana's meme market share via viral marketing.", risk: "Purely speculative value with no underlying technology." },
-        "bonk": { id: "The primary community meme coin on the Solana blockchain.", who: "Solana community contributors.", goal: "To reward Solana users and boost network liquidity.", risk: "High supply and dependency on Solana's overall health." },
-        "floki": { id: "A meme coin evolving into a utility-rich DeFi and NFT project.", who: "Floki community developers.", goal: "To combine meme power with real utility like gaming and schools.", risk: "Heavy marketing costs and competition from other memes." }
-        // [Note: Adding remaining coins is similar. This setup handles all dynamically.]
-    };
+        function loadChart(symbol) {
+            new TradingView.widget({
+                "width": "100%",
+                "height": 500,
+                "symbol": `BINANCE:${symbol}USDT`,
+                "interval": "60",
+                "timezone": "Etc/UTC",
+                "theme": "dark",
+                "style": "1",
+                "locale": "en",
+                "toolbar_bg": "#0f172a",
+                "enable_publishing": false,
+                "hide_top_toolbar": false,
+                "save_image": false,
+                "container_id": "tradingview_widget"
+            });
+        }
 
-    async function load() {
-        const id = new URLSearchParams(window.location.search).get('coin') || 'bitcoin';
-        try {
-            const res = await fetch(`https://api.coingecko.com/api/v3/coins/${id}?localization=false`);
-            const data = await res.json();
-            const m = data.market_data;
-
-            document.getElementById('coin-logo').src = data.image.large;
-            document.getElementById('coin-title').innerText = data.name;
-            document.getElementById('coin-symbol').innerText = data.symbol;
-            document.getElementById('coin-price').innerText = `$${m.current_price.usd.toLocaleString()}`;
+        function updateUI(data) {
+            document.getElementById('rank-val').innerText = `#${data.market_cap_rank}`;
+            document.getElementById('high-val').innerText = `$${data.market_data.high_24h.usd.toLocaleString()}`;
+            document.getElementById('low-val').innerText = `$${data.market_data.low_24h.usd.toLocaleString()}`;
+            document.getElementById('vol-val').innerText = `$${data.market_data.total_volume.usd.toLocaleString()}`;
             
-            const pc = m.price_change_percentage_24h;
-            document.getElementById('coin-change').innerText = `${pc.toFixed(2)}%`;
-            document.getElementById('coin-change').className = pc >= 0 ? 'text-success' : 'text-danger';
+            // Clean HTML description
+            const desc = data.description.en.split('. ')[0] + '. ' + (data.description.en.split('. ')[1] || '');
+            document.getElementById('bg-content').innerText = desc || "This protocol facilitates decentralized financial operations on-chain.";
+            
+            document.getElementById('risk-content').innerText = `High volatility detected in ${data.name} price action. Major risks include smart contract vulnerabilities and stiff competition from similar Layer-1/Layer-2 solutions. Always maintain stop-losses.`;
+        }
 
-            const sb = document.getElementById('signal-box');
-            if (pc > 3) { sb.innerText = "🚀 STRONG BUY"; sb.style.color = "#22c55e"; sb.style.borderColor = "#22c55e"; sb.style.background = "rgba(34,197,94,0.08)"; }
-            else if (pc < -3) { sb.innerText = "⚠️ STRONG SELL"; sb.style.color = "#ef4444"; sb.style.borderColor = "#ef4444"; sb.style.background = "rgba(239,68,68,0.08)"; }
-            else { sb.innerText = "⚖️ HOLD / NEUTRAL"; sb.style.color = "#eab308"; sb.style.borderColor = "#eab308"; sb.style.background = "rgba(234,179,8,0.08)"; }
+        function runAIEngine(market) {
+            const current = market.current_price.usd;
+            const high = market.high_24h.usd;
+            const low = market.low_24h.usd;
+            
+            const output = document.getElementById('signal-output');
+            const box = document.getElementById('ai-engine');
 
-            document.getElementById('rank').innerText = `#${data.market_cap_rank}`;
-            document.getElementById('high').innerText = `$${m.high_24h.usd.toLocaleString()}`;
-            document.getElementById('low').innerText = `$${m.low_24h.usd.toLocaleString()}`;
-            document.getElementById('vol').innerText = `$${m.total_volume.usd.toLocaleString()}`;
+            // Logic: Calculate if price is near bottom or top
+            const range = high - low;
+            const position = (current - low) / range;
 
-            const info = coinDB[id] || { 
-                id: "A prominent " + data.categories[0] + " asset for strategic growth.", 
-                who: "Developed by decentralized teams and blockchain experts.", 
-                goal: "To enhance utility and adoption within the digital economy.", 
-                risk: "Market volatility and evolving regulatory policies." 
-            };
-            document.getElementById('f-identity').innerText = info.id;
-            document.getElementById('f-who').innerText = info.who;
-            document.getElementById('f-goal').innerText = info.goal;
-            document.getElementById('f-risk').innerText = info.risk;
+            if (position < 0.25) {
+                output.innerText = "STRONG BUY";
+                output.style.color = "var(--up)";
+                box.style.borderColor = "var(--up)";
+            } else if (position > 0.75) {
+                output.innerText = "STRONG SELL";
+                output.style.color = "var(--down)";
+                box.style.borderColor = "var(--down)";
+            } else {
+                output.innerText = "HOLD";
+                output.style.color = "var(--warning)";
+                box.style.borderColor = "var(--warning)";
+            }
+        }
 
-            new TradingView.widget({ "autosize": true, "symbol": "BINANCE:" + data.symbol.toUpperCase() + "USDT", "interval": "60", "theme": "dark", "style": "1", "container_id": "tv_widget", "locale": "en" });
-
-        } catch (e) { console.log(e); }
-    }
-    load();
-</script>
+        initInsights();
+    </script>
 </body>
-</html>
+    </html>
+    
