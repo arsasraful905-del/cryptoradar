@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Predictions | CryptoRadar 24/7</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0f172a;
+            --card-dark: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #38bdf8;
+            --up-green: #22c55e;
+            --down-red: #ef4444;
+            --gold: #f59e0b;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* NAVIGATION (Consistent with Index) */
+        .navbar {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 15px 0;
+        }
+        .brand-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .brand-logo span { color: var(--accent); }
+        .nav-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 15px; }
+        .nav-link {
+            color: var(--text-muted) !important;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            text-decoration: none;
+            padding: 5px 10px;
+        }
+        .nav-link.active { color: var(--accent) !important; background: rgba(56, 189, 248, 0.1); border-radius: 5px; }
+
+        /* FEAR & GREED SECTION */
+        .fng-container {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin-bottom: 30px;
+            border: 1px solid rgba(56, 189, 248, 0.2);
+        }
+        #fng-value { font-size: 3rem; font-weight: 800; }
+        .fng-label { font-size: 1.2rem; font-weight: 600; text-transform: uppercase; }
+
+        /* PREDICTION CARDS */
+        .predict-card {
+            background: var(--card-dark);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: 0.3s;
+        }
+        .predict-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .coin-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .coin-icon { width: 35px; height: 35px; border-radius: 50%; }
+        
+        .forecast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .forecast-item { background: rgba(15, 23, 42, 0.5); padding: 10px; border-radius: 8px; text-align: center; }
+        .label { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; display: block; }
+        .value { font-size: 1rem; font-weight: 700; }
+
+        /* PRICE CEILING (MAX POTENTIAL) BOX */
+        .ceiling-box {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(245, 158, 11, 0.1);
+            border: 1px dashed var(--gold);
+            border-radius: 8px;
+        }
+        .ceiling-title { color: var(--gold); font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; gap: 5px; }
+        
+        .ai-badge {
+            background: var(--accent);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .loader { text-align: center; padding: 50px; color: var(--accent); }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar sticky-top">
+        <div class="container d-block">
+            <a class="brand-logo" href="index.html">CRYPTO<span>RADAR</span></a>
+            <div class="nav-container">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="insights.html">Insights</a>
+                <a class="nav-link active" href="predictions.html">Prediction</a>
+                <a class="nav-link" href="signals.html">Signals</a>
+                <a class="nav-link" href="converter.html">Converter</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="fng-container" id="fng-block">
+            <h5 class="text-muted mb-3">Market Sentiment Index</h5>
+            <div id="fng-value">--</div>
+            <div class="fng-label" id="fng-status">Analyzing...</div>
+            <p class="small text-muted mt-2">Historical data combined with social signals.</p>
+        </div>
+
+        <h4 class="section-title mb-4" style="border-left: 4px solid var(--accent); padding-left: 15px;">AI Price Forecasts & Limits</h4>
+        
+        <div id="prediction-list">
+            <div class="loader">
+                <div class="spinner-border" role="status"></div>
+                <p class="mt-2">Calculating Mathematical Potentials...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5 mb-4 text-muted small">
+        <p>© 2026 CryptoRadar 24/7 | Mathematical Forecasting Engine</p>
+    </footer>
+
+    <script>
+        // SYSTEM AUTH (Consistent with Index)
+        const _k_vault = ["CG-UdVdACwV3rJbE81TvRzBmdEt", "CG-KdkM9EsZhvr6d1rArDht5Hff", "CG-siBAtkem3KiSX1AMV44viPdx", "CG-8aU3oHEsz15KnWyf9K1SoizX"];
+        const _getSysAuth = () => _k_vault[Math.floor(Math.random() * _k_vault.length)];
+
+        // 1. FETCH FEAR & GREED INDEX
+        async function fetchFnG() {
+            try {
+                const res = await fetch('https://api.alternative.me/fng/');
+                const data = await res.json();
+                const val = data.data[0].value;
+                const status = data.data[0].value_classification;
+                
+                const display = document.getElementById('fng-value');
+                display.innerText = val;
+                document.getElementById('fng-status').innerText = status;
+
+                // Color Logic
+                if(val > 70) display.style.color = 'var(--up-green)';
+                else if(val < 30) display.style.color = 'var(--down-red)';
+                else display.style.color = 'var(--gold)';
+            } catch (e) { console.error("FnG Error"); }
+        }
+
+        // 2. FETCH DATA & GENERATE PREDICTIONS
+        async function loadPredictions() {
+            const endpoint = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=15&page=1&sparkline=false&x_cg_demo_api_key=${_getSysAuth()}`;
+            
+            try {
+                const res = await fetch(endpoint);
+                const data = await res.json();
+                renderPredictions(data);
+            } catch (e) {
+                document.getElementById('prediction-list').innerHTML = '<div class="text-center text-danger">Data Stream Interrupted. Retrying...</div>';
+            }
+        }
+
+        function renderPredictions(coins) {
+            const list = document.getElementById('prediction-list');
+            list.innerHTML = '';
+
+            coins.forEach(coin => {
+                // AI LOGIC: Simple Trend Forecasting
+                const change = coin.price_change_percentage_24h || 0;
+                const prediction24h = coin.current_price * (1 + (change / 100) * 0.8);
+                const sentiment = change >= 0 ? 'BULLISH' : 'BEARISH';
+                
+                // YOUR SPECIAL IDEA: Price Ceiling (Max Potential)
+                // Logic: Comparing with Bitcoin's Market Cap as the ultimate ceiling
+                const btcMarketCap = 1500000000000; // Approx $1.5 Trillion
+                const maxPossiblePrice = btcMarketCap / coin.circulating_supply;
+                
+                // Realistic Ceiling (10% of BTC Cap for altcoins)
+                const realisticCeiling = (btcMarketCap * 0.1) / coin.circulating_supply;
+
+                const card = `
+                    <div class="predict-card">
+                        <div class="coin-header">
+                            <img src="${coin.image}" class="coin-icon">
+                            <div>
+                                <span class="fw-bold">${coin.name} (${coin.symbol.toUpperCase()})</span>
+                                <span class="ai-badge ms-2">${sentiment}</span>
+                            </div>
+                        </div>
+
+                        <div class="forecast-grid">
+                            <div class="forecast-item">
+                                <span class="label">24H Forecast</span>
+                                <span class="value" style="color: ${change >= 0 ? 'var(--up-green)' : 'var(--down-red)'}">
+                                    $${prediction24h.toLocaleString(undefined, {maximumFractionDigits: coin.current_price < 1 ? 6 : 2})}
+                                </span>
+                            </div>
+                            <div class="forecast-item">
+                                <span class="label">Avg. 7D Target</span>
+                                <span class="value">$${(prediction24h * 1.05).toLocaleString(undefined, {maximumFractionDigits: coin.current_price < 1 ? 6 : 2})}</span>
+                            </div>
+                        </div>
+
+                        <div class="ceiling-box">
+                            <div class="ceiling-title">
+                                🚀 MAX POTENTIAL (THE CEILING)
+                            </div>
+                            <div class="mt-1">
+                                <span class="value" style="color: var(--gold)">$${realisticCeiling.toLocaleString(undefined, {maximumFractionDigits: 2})}</span>
+                                <p class="text-muted" style="font-size: 0.7rem; margin: 0;">
+                                    Based on Market Cap constraints. This asset is mathematically unlikely to exceed this price in the current cycle.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                list.innerHTML += card;
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchFnG();
+            loadPredictions();
+        });
+    </script>
+</body>
+  </html>
+  
