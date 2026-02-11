@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pro Calculators | CryptoRadar 24/7</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #020617;
+            --card-dark: #0f172a;
+            --accent: #0ea5e9;
+            --up-green: #10b981;
+            --down-red: #ef4444;
+            --text-muted: #64748b;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
+            padding-bottom: 50px;
+        }
+
+        /* Navbar Style */
+        .navbar {
+            background: rgba(2, 6, 23, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 14px 0;
+        }
+        .brand-logo { font-size: 1.5rem; font-weight: 800; color: #fff; text-decoration: none; }
+        .brand-logo span { color: var(--accent); }
+        .nav-link { color: var(--text-muted) !important; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin: 0 5px; }
+        .nav-link.active { color: var(--accent) !important; background: rgba(14, 165, 233, 0.1); border-radius: 6px; }
+
+        /* Calculator Cards */
+        .calc-card {
+            background: var(--card-dark);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            height: 100%;
+            transition: 0.3s;
+        }
+        .calc-card:hover { border-color: var(--accent); }
+
+        .input-label { font-size: 0.75rem; color: var(--text-muted); font-weight: 600; margin-bottom: 5px; display: block; }
+        .form-control {
+            background: #1e293b !important;
+            border: 1px solid #334155 !important;
+            color: #fff !important;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+        .form-control:focus { box-shadow: 0 0 0 2px var(--accent); border-color: transparent !important; }
+
+        .btn-calc {
+            background: var(--accent);
+            color: #000;
+            font-weight: 800;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        .result-area {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            display: none;
+            text-align: center;
+        }
+
+        .risk-warning { font-size: 0.65rem; color: #94a3b8; line-height: 1.4; margin-top: 15px; }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar sticky-top">
+        <div class="container text-center">
+            <a class="brand-logo" href="index.html">CRYPTO<span>RADAR</span></a>
+            <div class="d-flex justify-content-center mt-2 flex-wrap">
+                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="insights.html">Insights</a>
+                <a class="nav-link" href="predictions.html">Prediction</a>
+                <a class="nav-link" href="signals.html">Signals</a>
+                <a class="nav-link active" href="converter.html">Converter</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row g-4">
+            
+            <div class="col-lg-4 col-md-6">
+                <div class="calc-card">
+                    <h5 class="fw-800 mb-3 text-info">Live Converter 💱</h5>
+                    <label class="input-label">Amount</label>
+                    <input type="number" id="conv-amount" class="form-control mb-3" placeholder="1">
+                    <label class="input-label">From (e.g. BTC, ETH)</label>
+                    <input type="text" id="conv-from" class="form-control mb-3" value="BTC">
+                    <label class="input-label">To (e.g. USD)</label>
+                    <input type="text" id="conv-to" class="form-control" value="USD">
+                    <button class="btn-calc" onclick="runConverter()">CONVERT NOW</button>
+                    <div id="conv-res" class="result-area">
+                        <h4 id="conv-val" class="mb-0 fw-bold"></h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="calc-card">
+                    <h5 class="fw-800 mb-3 text-success">Net Profit (with Fee) 💰</h5>
+                    <label class="input-label">Investment ($)</label>
+                    <input type="number" id="p-inv" class="form-control mb-2">
+                    <label class="input-label">Entry Price ($)</label>
+                    <input type="number" id="p-entry" class="form-control mb-2">
+                    <label class="input-label">Exit Price ($)</label>
+                    <input type="number" id="p-exit" class="form-control">
+                    <button class="btn-calc" onclick="runProfit()">CALC PROFIT</button>
+                    <div id="p-res" class="result-area">
+                        <div class="small text-muted">Net Profit (after 0.1% fee)</div>
+                        <h4 id="p-val" class="fw-bold my-1"></h4>
+                        <span id="p-roi" class="badge"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div class="calc-card">
+                    <h5 class="fw-800 mb-3 text-danger">Liquidation Shield 🛡️</h5>
+                    <label class="input-label">Entry Price ($)</label>
+                    <input type="number" id="l-entry" class="form-control mb-2">
+                    <label class="input-label">Leverage (x)</label>
+                    <input type="number" id="l-lev" class="form-control mb-2" placeholder="e.g. 10">
+                    <label class="input-label">Direction</label>
+                    <select id="l-dir" class="form-control">
+                        <option value="long">LONG (Buy)</option>
+                        <option value="short">SHORT (Sell)</option>
+                    </select>
+                    <button class="btn-calc" onclick="runLiquidation()">CALC LIQUIDATION</button>
+                    <div id="l-res" class="result-area">
+                        <div class="small text-muted">Estimated Liquidation Price</div>
+                        <h4 id="l-val" class="fw-bold text-danger"></h4>
+                        <div class="risk-warning">Warning: 100% Capital loss if price hits this level.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="calc-card">
+                    <h5 class="fw-800 mb-3 text-warning">Risk-Reward Analysis ⚖️</h5>
+                    <div class="row">
+                        <div class="col-6">
+                            <label class="input-label">Entry Price</label>
+                            <input type="number" id="r-entry" class="form-control mb-2">
+                        </div>
+                        <div class="col-6">
+                            <label class="input-label">Stop Loss</label>
+                            <input type="number" id="r-sl" class="form-control mb-2">
+                        </div>
+                    </div>
+                    <label class="input-label">Take Profit (Target)</label>
+                    <input type="number" id="r-tp" class="form-control">
+                    <button class="btn-calc" onclick="runRR()">ANALYZE TRADE</button>
+                    <div id="r-res" class="result-area">
+                        <div id="r-status" class="fw-bold mb-1"></div>
+                        <div class="small text-muted">Ratio: <span id="r-val" class="text-white"></span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+                <div class="calc-card">
+                    <h5 class="fw-800 mb-3" style="color: #a855f7;">DCA Average Cost 📉</h5>
+                    <div class="row g-2">
+                        <div class="col-6"><label class="input-label">1st Buy Price</label><input type="number" id="d-p1" class="form-control"></div>
+                        <div class="col-6"><label class="input-label">Amount ($)</label><input type="number" id="d-a1" class="form-control"></div>
+                        <div class="col-6"><label class="input-label">2nd Buy Price</label><input type="number" id="d-p2" class="form-control"></div>
+                        <div class="col-6"><label class="input-label">Amount ($)</label><input type="number" id="d-a2" class="form-control"></div>
+                    </div>
+                    <button class="btn-calc" onclick="runDCA()">CALC AVERAGE</button>
+                    <div id="d-res" class="result-area">
+                        <div class="small text-muted">Your New Average Price</div>
+                        <h4 id="d-val" class="fw-bold text-white mb-0"></h4>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Feature 1: Live Converter (Simple Logic)
+        async function runConverter() {
+            const amount = document.getElementById('conv-amount').value || 1;
+            const from = document.getElementById('conv-from').value.toLowerCase();
+            const to = document.getElementById('conv-to').value.toLowerCase();
+            const resDiv = document.getElementById('conv-res');
+            
+            try {
+                const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${from}&vs_currencies=${to}`);
+                const data = await response.json();
+                const rate = data[Object.keys(data)[0]][to];
+                document.getElementById('conv-val').innerText = (amount * rate).toLocaleString() + ' ' + to.toUpperCase();
+                resDiv.style.display = 'block';
+            } catch (e) { alert("Coin name incorrect. Use full name like 'bitcoin' or 'ethereum'"); }
+        }
+
+        // Feature 2: Profit with Fee
+        function runProfit() {
+            const inv = parseFloat(document.getElementById('p-inv').value);
+            const entry = parseFloat(document.getElementById('p-entry').value);
+            const exit = parseFloat(document.getElementById('p-exit').value);
+            const fee = 0.001; // 0.1% fee
+
+            const profit = ((inv / entry) * exit) - inv;
+            const netProfit = profit - (inv * fee) - ( (inv+profit) * fee);
+            const roi = (netProfit / inv) * 100;
+
+            document.getElementById('p-val').innerText = '$' + netProfit.toFixed(2);
+            document.getElementById('p-val').style.color = netProfit >= 0 ? '#10b981' : '#ef4444';
+            document.getElementById('p-roi').innerText = roi.toFixed(2) + '% ROI';
+            document.getElementById('p-roi').className = netProfit >= 0 ? 'badge bg-success' : 'badge bg-danger';
+            document.getElementById('p-res').style.display = 'block';
+        }
+
+        // Feature 3: Liquidation
+        function runLiquidation() {
+            const entry = parseFloat(document.getElementById('l-entry').value);
+            const lev = parseFloat(document.getElementById('l-lev').value);
+            const dir = document.getElementById('l-dir').value;
+            
+            let liq;
+            if(dir === 'long') liq = entry * (1 - (1/lev));
+            else liq = entry * (1 + (1/lev));
+
+            document.getElementById('l-val').innerText = '$' + liq.toLocaleString();
+            document.getElementById('l-res').style.display = 'block';
+        }
+
+        // Feature 4: Risk-Reward
+        function runRR() {
+            const entry = parseFloat(document.getElementById('r-entry').value);
+            const sl = parseFloat(document.getElementById('r-sl').value);
+            const tp = parseFloat(document.getElementById('r-tp').value);
+
+            const risk = Math.abs(entry - sl);
+            const reward = Math.abs(tp - entry);
+            const ratio = (reward / risk).toFixed(2);
+
+            const status = document.getElementById('r-status');
+            if(ratio >= 2) { status.innerText = "EXCELLENT TRADE ✅"; status.style.color = "#10b981"; }
+            else { status.innerText = "RISKY TRADE ⚠️"; status.style.color = "#f59e0b"; }
+
+            document.getElementById('r-val').innerText = `1 : ${ratio}`;
+            document.getElementById('r-res').style.display = 'block';
+        }
+
+        // Feature 5: DCA
+        function runDCA() {
+            const p1 = parseFloat(document.getElementById('d-p1').value);
+            const a1 = parseFloat(document.getElementById('d-a1').value);
+            const p2 = parseFloat(document.getElementById('d-p2').value);
+            const a2 = parseFloat(document.getElementById('d-a2').value);
+
+            const totalAmount = a1 + a2;
+            const totalCoins = (a1/p1) + (a2/p2);
+            const avg = totalAmount / totalCoins;
+
+            document.getElementById('d-val').innerText = '$' + avg.toLocaleString(undefined, {maximumFractionDigits: 4});
+            document.getElementById('d-res').style.display = 'block';
+        }
+    </script>
+</body>
+          </html>
+          
